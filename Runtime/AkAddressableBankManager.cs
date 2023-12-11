@@ -256,13 +256,19 @@ namespace AK.Wwise.Unity.WwiseAddressables
 				{
 					foreach (var language in bank.StreamingMedia.Keys)
 					{
+#if UNITY_STANDALONE_WIN
+						var dataPath = UnityEngine.Application.dataPath;
+#else
+						var dataPath = UnityEngine.Application.persistentDataPath;
+#endif
+
 						if (language == "SFX")
 						{
-							destinationDir = UnityEngine.Application.persistentDataPath; ;
+							destinationDir = dataPath; ;
 						}
 						else
 						{
-							destinationDir = Path.Combine(UnityEngine.Application.persistentDataPath, language);
+							destinationDir = Path.Combine(dataPath, language);
 						}
 
 						if (!Directory.Exists(destinationDir))
