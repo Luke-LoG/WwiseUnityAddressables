@@ -257,7 +257,7 @@ namespace AK.Wwise.Unity.WwiseAddressables
 					foreach (var language in bank.StreamingMedia.Keys)
 					{
 #if UNITY_STANDALONE_WIN
-						var dataPath = Path.Combine(UnityEngine.Application.dataPath, "ExtractedSoundBanks\Windows");
+						var dataPath = Path.Combine(UnityEngine.Application.dataPath, "ExtractedSoundBanks\\Windows");
 #else
 						var dataPath = UnityEngine.Application.persistentDataPath;
 #endif
