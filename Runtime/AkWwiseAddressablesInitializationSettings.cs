@@ -4,26 +4,38 @@ namespace AK.Wwise.Unity.WwiseAddressables
 {
 	public class AkWwiseAddressablesInitializationSettings : AkWwiseInitializationSettings
 	{
-		private static AkWwiseAddressablesInitializationSettings m_Instance = null;
-
+		private static AkWwiseAddressablesInitializationSettings m_AddressablesInstance;
 		public new static AkWwiseAddressablesInitializationSettings Instance
 		{
 			get
 			{
-				if (m_Instance == null)
+				if (m_AddressablesInstance == null)
 				{
+					if (m_Instance != null && m_Instance is AkWwiseAddressablesInitializationSettings addressableSettings)
+					{
+						m_AddressablesInstance = addressableSettings;
+					}
+					else
+					{
 #if UNITY_EDITOR
-					var name = typeof(AkWwiseInitializationSettings).Name;
-					var className = typeof(AkWwiseAddressablesInitializationSettings).Name;
-					m_Instance = ReplaceOrCreateAsset(className, name);
+						var name = typeof(AkWwiseInitializationSettings).Name;
+						var className = typeof(AkWwiseAddressablesInitializationSettings).Name;
+						m_AddressablesInstance = ReplaceOrCreateAsset(className, name);
 #else
-					m_Instance =(AkWwiseAddressablesInitializationSettings) CreateInstance<AkWwiseAddressablesInitializationSettings>();
-					UnityEngine.Debug.LogWarning("WwiseUnity: No platform specific settings were created. Default initialization settings will be used.");
+						m_AddressablesInstance =(AkWwiseAddressablesInitializationSettings) CreateInstance<AkWwiseAddressablesInitializationSettings>();
+						UnityEngine.Debug.LogWarning("WwiseUnity: No platform specific settings were created. Default initialization settings will be used.");
 #endif
+						m_Instance = m_AddressablesInstance;
+					}
 				}
-
-				return m_Instance;
+				return m_AddressablesInstance;
 			}
+		}
+
+		public static void SetInstance(AkWwiseAddressablesInitializationSettings existingSettings)
+		{
+			m_Instance = existingSettings;
+			m_AddressablesInstance = existingSettings;
 		}
 
 		protected override void LoadInitBank()
