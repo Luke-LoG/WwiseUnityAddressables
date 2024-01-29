@@ -251,24 +251,20 @@ namespace AK.Wwise.Unity.WwiseAddressables
 				bank.GCHandle.Free();
 				Addressables.Release(AsyncHandle);
 
+				var persistentDataPath = AkBasePathGetter.Get().PersistentDataPath;
+
 				string destinationDir;
 				if (bank.StreamingMedia != null)
 				{
 					foreach (var language in bank.StreamingMedia.Keys)
 					{
-#if UNITY_STANDALONE_WIN
-						var dataPath = Path.Combine(UnityEngine.Application.dataPath, "ExtractedSoundBanks~\\Windows");
-#else
-						var dataPath = UnityEngine.Application.persistentDataPath;
-#endif
-
 						if (language == "SFX")
 						{
-							destinationDir = dataPath; ;
+							destinationDir = persistentDataPath;
 						}
 						else
 						{
-							destinationDir = Path.Combine(dataPath, language);
+							destinationDir = Path.Combine(persistentDataPath, language);
 						}
 
 						if (!Directory.Exists(destinationDir))
