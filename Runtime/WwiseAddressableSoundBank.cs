@@ -341,6 +341,8 @@ namespace AK.Wwise.Unity.WwiseAddressables
 
 		public void Deserialize()
 		{
+			LocalizedBanks.Clear();
+			LocalizedStreamingMedia.Clear();
 			int idx = 0;
 			foreach (var key in LocalizedBankKeys)
 			{
