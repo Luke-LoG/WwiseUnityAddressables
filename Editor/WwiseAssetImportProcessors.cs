@@ -68,10 +68,11 @@ namespace AK.Wwise.Unity.WwiseAddressables
 					bankAssetsToProcess.Add(item);
 				}
 
-				if (Path.GetExtension(item) == ".wem")
-				{
-					streamingAssetsToProcess.Add(item);
-				}
+				// Intentionally disable WEM processing as we are manually copying into streaming assets
+				// if (Path.GetExtension(item) == ".wem")
+				// {
+				// 	streamingAssetsToProcess.Add(item);
+				// }
 			}
 
 			if (bankAssetsToProcess.Count > 0)
